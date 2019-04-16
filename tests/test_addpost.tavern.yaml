@@ -1,0 +1,79 @@
+---
+test_name: Test math add post api
+
+stages:
+  - name: Make sure we get the correct result from simple addition
+
+    # Add 3 and 4
+    request:
+      url: http://127.0.0.1:5002/math/add
+      method: POST
+      data:
+        n1: 3
+        n2: 4
+
+    # expect 7 as the result
+    response:
+      status_code: 200
+      body:
+        result: 7
+
+  - name: Make sure we get the correct result when only one parameter provided
+
+    # Add 3 and nothing
+    request:
+      url: http://127.0.0.1:5002/math/add
+      method: POST
+      data:
+        n1: 3
+
+    # expect 3 as the result
+    response:
+      status_code: 200
+      body:
+        result: 3
+
+  - name: Make sure we get the correct result when no parameters provided
+
+    # Add nothing
+    request:
+      url: http://127.0.0.1:5002/math/add
+      method: POST
+
+    # expect 0 as the result
+    response:
+      status_code: 200
+      body:
+        result: 0
+
+  - name: Make sure we get the correct result when invalid parameters provided
+
+    # Add invalids
+    request:
+      url: http://127.0.0.1:5002/math/add
+      method: POST
+      data:
+        n1: a
+        n2: s
+
+    # expect 0 as the result
+    response:
+      status_code: 200
+      body:
+        result: 0
+
+  - name: Make sure we get the correct result when mixed parameters provided
+
+    # Add invalid and 9
+    request:
+      url: http://127.0.0.1:5002/math/add
+      method: POST
+      data:
+        n1: a
+        n2: 9
+
+    # expect 9 as the result
+    response:
+      status_code: 200
+      body:
+        result: 9

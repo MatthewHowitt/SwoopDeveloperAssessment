@@ -1,0 +1,68 @@
+---
+test_name: Test math add get api
+
+stages:
+  - name: Make sure we get the correct result from simple addition
+
+    # Add 2 and 3
+    request:
+      url: http://127.0.0.1:5002/math/add?n1=2&n2=3
+      method: GET
+
+    # expect 5 as the result
+    response:
+      status_code: 200
+      body:
+        result: 5
+
+  - name: Make sure we get the correct result when only one parameter provided
+    
+    # Add 2 and nothing
+    request:
+      url: http://127.0.0.1:5002/math/add?n1=2
+      method: GET
+
+    # expect 2 as the result
+    response:
+      status_code: 200
+      body:
+        result: 2
+
+  - name: Make sure we get the correct result when no parameters provided
+    
+    # Add nothing
+    request:
+      url: http://127.0.0.1:5002/math/add
+      method: GET
+
+    # expect 0 as the result
+    response:
+      status_code: 200
+      body:
+        result: 0
+
+  - name: Make sure we get the correct result when invalid parameters provided
+    
+    # Add invalids
+    request:
+      url: http://127.0.0.1:5002/math/add?n1=a&n2=b
+      method: GET
+
+    # expect 0 as the result
+    response:
+      status_code: 200
+      body:
+        result: 0
+
+  - name: Make sure we get the correct result when mixed parameters provided
+    
+    # Add invalid and 4
+    request:
+      url: http://127.0.0.1:5002/math/add?n1=a&n2=4
+      method: GET
+
+    # expect 4 as the result
+    response:
+      status_code: 200
+      body:
+        result: 4
